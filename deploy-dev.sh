@@ -18,13 +18,15 @@ EOJSON
 
 echo "→ Deploying DEV v$NEW_VERSION..."
 
+cd api
+npm install --no-audit --no-fund
+echo "→ DB-Migration..."
+npm run migrate
+cd ..
+
 cd web
 npm install --no-audit --no-fund
 npm run build
-cd ..
-
-cd api
-npm install --no-audit --no-fund
 cd ..
 
 sudo systemctl restart fitness-api-dev
