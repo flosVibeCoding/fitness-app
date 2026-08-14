@@ -1,0 +1,10 @@
+[Unit]
+Description=Renpho -> Fitness DB Sync
+After=network.target docker.service
+
+[Service]
+Type=oneshot
+User=a503357
+WorkingDirectory=/home/a503357/fitness-app/renpho-sync
+ExecStart=/home/a503357/fitness-app/renpho-sync/venv/bin/python sync.py
+EnvironmentFile=/home/a503357/fitness-app/renpho-sync/.env
