@@ -11,7 +11,7 @@ export default function History() {
   useEffect(() => {
     api
       .getSessions(30)
-      .then(setSessions)
+      .then((data) => setSessions(data.filter((s) => (s.sets || []).length > 0)))
       .finally(() => setLoading(false));
   }, []);
 
@@ -46,7 +46,7 @@ export default function History() {
                     <span style={{ fontFamily: 'var(--font-mono)', color: 'var(--muted)' }}>
                       {setList
                         .filter((x) => x.weight_kg || x.reps)
-                        .map((x) => `${x.weight_kg ?? '-'}kg×${x.reps ?? '-'}`)
+                        .map((x) => `${x.weight_kg ?? '-'}kg×${x.reps ?? '-'}${x.rpe ? ` @${x.rpe}` : ''}`)
                         .join('  ')}
                     </span>
                   </div>
