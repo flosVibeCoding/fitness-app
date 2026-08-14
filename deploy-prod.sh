@@ -15,12 +15,12 @@ NEW_VERSION="$MAJOR.$MINOR.$PATCH"
 echo "$NEW_VERSION" > VERSION
 
 DEPLOYED_AT=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-cat > web/src/version-info.json <<EOF
+cat > web/src/version-info.json <<EOJSON
 {
   "version": "$NEW_VERSION",
   "deployedAt": "$DEPLOYED_AT"
 }
-EOF
+EOJSON
 
 echo "→ Deploying PROD v$NEW_VERSION..."
 
@@ -34,5 +34,10 @@ npm install --no-audit --no-fund
 cd ..
 
 sudo systemctl restart fitness-api
+
+echo "→ Committe & push nach main..."
+git add -A
+git commit -m "Deploy prod v$NEW_VERSION" || echo "  (nichts Neues zu committen)"
+git push origin main
 
 echo "✓ PROD v$NEW_VERSION deployed — https://fitness.seliflo-orga.de"
